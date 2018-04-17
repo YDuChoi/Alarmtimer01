@@ -22,22 +22,30 @@ class ViewController: UIViewController {
         formatter.dateFormat = "yyy-MM-dd HH:mm:ss"
         timeLabel.text = formatter.string(from: myDatePicker.date)
         myTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {(myTimer) in self.updateTime()
-            
-        })
     }
+    )}
     func updateTime() {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyy-MM-dd HH:mm:ss"
         currentTimeLabel.text = formatter.string(from: date)
         if currentTimeLabel.text == timeLabel.text {
-            view.backgroundColor = UIColor.red
-            count = false
+            let myAlert =  UIAlertController(title: "알림", message: "설정한 시간이 되었습니다.!", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "확인", style: .default, handler: {(myaction: UIAlertAction) -> Void in
+                self.view.backgroundColor = UIColor.red
+            })
+            
+            let test = UIAlertAction(title: "중간", style: .default, handler: {(myaction: UIAlertAction) -> Void in
+                self.view.backgroundColor = UIColor.green
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            myAlert.addAction(okAction)
+            myAlert.addAction(cancelAction)
+            myAlert.addAction(test)
+            present(myAlert, animated: true, completion: nil)
         }
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     @IBAction func changeDatePicker(_ sender: Any) {
         let formatter = DateFormatter()
